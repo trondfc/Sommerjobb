@@ -13,7 +13,7 @@ Koden benytter funksjoner stjålet fra Zumo proximety sensing biblioteket for og
 ## Mottak
 Koden for mottak er basert på [IRremote](https://github.com/Arduino-IRremote/Arduino-IRremote) biblioteket fra shirriff. Koden er i stand til og motta IR pakker og dekode de i forhold til NEC protokollen. Mottat data blir tilgjengelig som et struct. Koden git også en feilmelding om den mottar data den ikke klarer å dekode.
 
-![image](./bilder/Schematic_ReciveIRCommand.png)
+![image](bilder/Schematic_ReciveIRCommand.png)
 
 ## Oppgave ideer
 ### Målstrek
@@ -34,4 +34,8 @@ Kode for og motta NEC datapakker fra IR
 
 ### LapTiming.ino
 Kode for måling av rundetid på Zumo biler ved hjelp av IR datapakker for identifikasjon og break beam sensor for timing
-![image](./bilder/Schematic_LapTiming.png)
+![image](bilder/Schematic_LapTiming.png)
+
+### tolBooth.ino
+Kode for åpning/lukking av en servobaser bomstasjon basert på kommando mottatt fra zumo biler.
+![image](bilder/Schematic_TolBooth.png)
