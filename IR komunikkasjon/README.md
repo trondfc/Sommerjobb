@@ -1,0 +1,23 @@
+# IR kommunikkasjon Zumo32u4
+Sending av IR signaler fra en zumo32u4 vha. fastmonterte leds, og mottak på en arduino uno vha [IRM-56384](https://datasheet.lcsc.com/lcsc/2201242300_Everlight-Elec-IRM-56384_C72048.pdf) IR mottaker.
+
+## Sending 
+Koden benytter seg av Zumo32u4 sine fastmonterte IR leds til å sende ut data i hennhold til NEC protokollen med en subcarier på 38kHz. Dataen som bilr sendt er en 8-bits ID og en 8-bits commando. I hennhold til NEC bil databittene send to ganger hver (en gang normalt, en gang invertert) for robusthet på signalet.
+
+Koden er blokkerende og forhindrer annen kode i ~70ms mens pakken blir sendt.
+
+IR ledene på Zumoen er to forroverpekende THT LEDs og to sidestilte SMD LEDs, alle med en synsvinkel på ~50&deg; hvor to og to kan benyttes samtidig. Enten høyre side og høyre front, eller venstre side og venstre front.
+
+Koden benytter funksjoner stjålet fra Zumo proximety sensing biblioteket for og generere et PWM signal med riktig frekvens for bærebølgen. Disse funksjonene brukes så til og skur av og på PWM signalene med timing som følger NEC protokollen
+
+## Mottak
+Koden for mottak er basert på [IRremote](https://github.com/Arduino-IRremote/Arduino-IRremote) biblioteket fra shirriff. Koden er i stand til og motta IR pakker og dekode de i forhold til NEC protokollen. Mottat data blir tilgjengelig som et struct. Koden git også en feilmelding om den mottar data den ikke klarer å dekode.
+
+![image](Schematic_Reciver.png)
+
+## Oppgave ideer
+### Målstrek
+Timing av bilens rundetid, med unike ID koder kan dette også gjøres av flere biler samtidig. Det kan da brukes komandoer for og sende komandoer til målstreken som "Start timing", "Registrer rundetid", "Avslutt timing" osv.
+
+### komanoder til stasjoner
+Kommandoen kan benyttes til å sende enkle beskjeder til stasjoner rund banen som "start lading" og "stopp lading" eller "lukk opp bomstasjon" Med et saldosystem vill man da også kunne inføre ting som bompenger.
