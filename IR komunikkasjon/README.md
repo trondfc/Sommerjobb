@@ -13,7 +13,7 @@ Koden benytter funksjoner stjålet fra Zumo proximety sensing biblioteket for og
 ## Mottak
 Koden for mottak er basert på [IRremote](https://github.com/Arduino-IRremote/Arduino-IRremote) biblioteket fra shirriff. Koden er i stand til og motta IR pakker og dekode de i forhold til NEC protokollen. Mottat data blir tilgjengelig som et struct. Koden git også en feilmelding om den mottar data den ikke klarer å dekode.
 
-![image](Schematic_Reciver.png)
+![image](./bilder/Schematic_ReciveIRCommand.png)
 
 ## Oppgave ideer
 ### Målstrek
@@ -21,3 +21,17 @@ Timing av bilens rundetid, med unike ID koder kan dette også gjøres av flere b
 
 ### komanoder til stasjoner
 Kommandoen kan benyttes til å sende enkle beskjeder til stasjoner rund banen som "start lading" og "stopp lading" eller "lukk opp bomstasjon" Med et saldosystem vill man da også kunne inføre ting som bompenger.
+
+## Kode
+### SubcarierGeneration.ino
+Kode for og blinke IR LEDene med en subcarier frekvens på 38kHz
+
+### SendIRCommand.ino
+Kode for og sende NEC datapakker med IR
+
+### ReciveIRCommand.ino
+Kode for og motta NEC datapakker fra IR
+
+### LapTiming.ino
+Kode for måling av rundetid på Zumo biler ved hjelp av IR datapakker for identifikasjon og break beam sensor for timing
+![image](./bilder/Schematic_LapTiming.png)

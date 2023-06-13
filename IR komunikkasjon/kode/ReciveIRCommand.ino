@@ -12,9 +12,10 @@
 #define DEBUG(msg)
 #endif
 
+#define DECODE_NEC          // Set protocol to NEC must be before #include <IRremote.hpp>
 #include <IRremote.hpp> // include IRremote library
 
-#define DECODE_NEC          // Set protocol to NEC
+
 #define IR_RECEIVE_PIN 2    // Pin for IR receiver
 
 void setup() {
