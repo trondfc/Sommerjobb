@@ -39,7 +39,7 @@ Kode for måling av rundetid på Zumo biler ved hjelp av IR datapakker for ident
 Utkast til enkel 3D modell av tidtaknings portal. 1.5 biler bred, 1.5 biler høy og 10cm lang.
 
 1. Photoresistor
-2. koblingsbrett
+2. Koblingsbrett
 3. Arduino Uno
 4. IR mottaker
 5. Laser diode
@@ -48,12 +48,25 @@ Utkast til enkel 3D modell av tidtaknings portal. 1.5 biler bred, 1.5 biler høy
 Kode for åpning/lukking av en servobaser bomstasjon basert på kommando mottatt fra zumo biler.
 ![image](bilder/Schematic_TolBooth.png)
 
+
+## Testing av konsept
+### Sending/mottak: 
+
+Sending og mottak av data fungerer med relativt god pålitlighet. Leslig fra omrtentlig 60&deg; til -135&deg; (0&deg; rett frem) på siden dataen sendes fra med murlighet for og vekse side.
+
+Murlig sendestyrken burde reduseres for og minimere interferens fra andre biler skal flere kjøre samtidig. 
+
+### Sendings påvirkning på kjøring
+Sendingen av datapakker forhindrer ikke kjøringen drastisk, men skaper en merkbar rykning i bilen om kjøreretningen må korigeres mens sendingen fåregår.
+
+
 ## TBD
 - [ ] Teste interference fra flere biler
-- [ ] Teste påvirkning på kjøring
+- [x] Teste påvirkning på kjøring
 - [x] 3D modell timing portal
   - [ ] 3D print
   - [ ] Fysisk test
 - [ ] 3D modell bomstasjon
   - [ ] 3D print
   - [ ] Fysisk test
+
