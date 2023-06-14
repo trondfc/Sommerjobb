@@ -35,7 +35,7 @@ Kode for og motta NEC datapakker fra IR
 ### LapTiming.ino
 Kode for måling av rundetid på Zumo biler ved hjelp av IR datapakker for identifikasjon og break beam sensor for timing
 ![image](bilder/Schematic_LapTiming.png)
-![image](bilder/3Dmodell_LapTid.png)
+![image](bilder/3Dmodell_LapTiming.png)
 Utkast til enkel 3D modell av tidtaknings portal. 1.5 biler bred, 1.5 biler høy og 10cm lang.
 
 1. Photoresistor
@@ -47,6 +47,7 @@ Utkast til enkel 3D modell av tidtaknings portal. 1.5 biler bred, 1.5 biler høy
 ### tolBooth.ino
 Kode for åpning/lukking av en servobaser bomstasjon basert på kommando mottatt fra zumo biler.
 ![image](bilder/Schematic_TolBooth.png)
+![image](bilder/3Dmodell_TolBooth.png)
 
 
 ## Testing av konsept
