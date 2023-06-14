@@ -53,21 +53,25 @@ Kode for åpning/lukking av en servobaser bomstasjon basert på kommando mottatt
 ## Testing av konsept
 ### Sending/mottak: 
 
-Sending og mottak av data fungerer med relativt god pålitlighet. Leslig fra omrtentlig 60&deg; til -135&deg; (0&deg; rett frem) på siden dataen sendes fra med murlighet for og vekse side.
+Sending og mottak av data fungerer med relativt god pålitlighet. Leslig fra omrtentlig 30&deg; til -160&deg; (0&deg; rett frem) på siden dataen sendes fra med murlighet for og vekse side. Med brightnes på 1 (~0.25% duticycle) er rekkevidden på pålitlig sending omtrentlig 50cm til siden og 2.5m forover.
 
-Murlig sendestyrken burde reduseres for og minimere interferens fra andre biler skal flere kjøre samtidig. 
+~~Murlig sendestyrken burde reduseres for og minimere interferens fra andre biler skal flere kjøre samtidig.~~
 
 ### Sendings påvirkning på kjøring
 Sendingen av datapakker forhindrer ikke kjøringen drastisk, men skaper en merkbar rykning i bilen om kjøreretningen må korigeres mens sendingen fåregår.
 
+### Interference fra flere biler
+Kjøres flere biler samtidig vill det oppstå interference om sendingen fåregår samtidig. Dette vil ødelegge begge datapakker. Med en sendetid på ~70ms og en rekkevidde på ~2.5m vil dette kunne delevis ungåes ved å begrense hvor ofte datapakkene sendes og skru på bilene etter hverandre
+
 
 ## TBD
-- [ ] Teste interference fra flere biler
+- [x] Teste interference fra flere biler
+- [x] Teste påvirkning av dutycycle for rekkevide og interference.
 - [x] Teste påvirkning på kjøring
 - [x] 3D modell timing portal
   - [ ] 3D print
   - [ ] Fysisk test
-- [ ] 3D modell bomstasjon
+- [x] 3D modell bomstasjon
   - [ ] 3D print
   - [ ] Fysisk test
 
