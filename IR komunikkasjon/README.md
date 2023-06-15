@@ -15,6 +15,11 @@ Koden for mottak er basert på [IRremote](https://github.com/Arduino-IRremote/Ar
 
 ![image](bilder/Schematic_ReciveIRCommand.png)
 
+
+## Sending Arduino -> bil
+For sending i motsat retning fungerer ReciveIRCommand koden på bilen med ` IR_RECEIVE_PIN 22` og SimpleSender eksempelet fra IrRemote biblioteket på arduino sender enheten(uno). Dette vil kunne brukes til og gi bilen enkle beskjeder, som feks fortelle den hva slags stasjon (mplstripe, bom ++) den kommer til
+
+
 ## Oppgave ideer
 ### Målstrek
 Timing av bilens rundetid, med unike ID koder kan dette også gjøres av flere biler samtidig. Det kan da brukes komandoer for og sende komandoer til målstreken som "Start timing", "Registrer rundetid", "Avslutt timing" osv.
@@ -48,6 +53,9 @@ Utkast til enkel 3D modell av tidtaknings portal. 1.5 biler bred, 1.5 biler høy
 Kode for åpning/lukking av en servobaser bomstasjon basert på kommando mottatt fra zumo biler.
 ![image](bilder/Schematic_TolBooth.png)
 ![image](bilder/3Dmodell_TolBooth.png)
+
+### CallAndAnswer_xx.ino
+Kode for og sende en forespørsel fra en arduino uno og få svar fra Zumo.
 
 
 ## Testing av konsept
