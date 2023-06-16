@@ -9,7 +9,7 @@ Lesigen av "tagen" går fort nokk til at det bør holde og kjøre forbi leseren,
 
 Rekevidden på avlesningen er begrenset til ~2cm hvilket gjør det utfordrene og lese av bilen fra siden. Med en 3D printet "hump" men en helning på >10&deg; er bilen i stand til og kjøre over rfid leseren og tagen kan leses fra undersiden.
 
-Det er murlig og skrive data til "tagen" gitt at den er av typen MIFARE Classic, men det krever kortere avstand og tar ~3s. Dvs. at bilen må stoppe over leseren. Klistremerke tagen jeg har er ikke MIFARE Classic, 
+RFID modulen kommuniserer via SPI hvilket ikke er tilgjengelig på Zumo bilen. Det eksisterer i2c RFID lesere som trolig kan benyttes.
 
 ## Oppgaveideer
 * Registrering av passering for rundetid, bompenger el.

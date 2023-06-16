@@ -1,8 +1,32 @@
 # Steppermotor 
-Styring av steppermotor med en arduino uno og en L293D motordriver.
-Kode hentet fra https://docs.arduino.cc/learn/electronics/stepper-motors
+## Bruk av steppermotor
+ `Stepper.h` biblioteket følger med instalasjonen av Arduino IDE og indeholder to enkle funksjoner for bruk av stepermotoren. `setSpeed(long RPM)`hvilket setter hastigheten motoren skal rotere, og `step(int number_of_steps)`. I tilleg til disse funksjonenen inneholder den en constructor som kalles når klassen blir initialiser. `Stepper(int number_of_steps, int motor_pin_1, int motor_pin_2, int motor_pin_3, int motor_pin_4)` Denne brukes til å sette parameterene til motoren.
 
-Koden benytter stepper.h biblioteket som er inkludert i arduino IDE og er enkel og forstå og sette opp. Bør ikke være noe problem og komme i gang for 1. års studenter. Utfordringen vill heller komme fra hva de blir bedt om og gjøre med den.
+ ```cpp 
+ #include <Stepper.h>
+
+ #define STEPS_PER_REVOLUTION 200
+
+ #define L293D_IN1_PIN 8
+ #define L293D_IN2_PIN 9
+ #define L293D_IN3_PIN 10
+ #define L293D_IN4_PIN 11
+
+ Stepper myStepper(STEPS_PER_REVOLUTION, L293D_IN1_PIN, L293D_IN2_PIN, L293D_IN3_PIN, L293D_IN4_PIN);
+
+ void setup(){
+    myStepper.setSpeed(100);
+ }
+
+ void loop(){
+    // Rotate one revolution
+    myStepper.step(STEPS_PER_REVOLUTION);
+    delay(1000);
+    // Rotate back
+    myStepper.step(-STEPS_PER_REVOLUTION);
+    delay(1000);
+ }
+ ```
 
 ![image](Schematic.png)
 
