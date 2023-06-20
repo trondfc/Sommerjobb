@@ -13,6 +13,10 @@ Koden benytter funksjoner stjålet fra Zumo proximety sensing biblioteket for og
 ## Mottak
 Koden for mottak er basert på [IRremote](https://github.com/Arduino-IRremote/Arduino-IRremote) biblioteket fra shirriff. Koden er i stand til og motta IR pakker og dekode de i forhold til NEC protokollen. Mottat data blir tilgjengelig som et struct. Koden git også en feilmelding om den mottar data den ikke klarer å dekode.
 
+Denne koden fungerer på både arduino uno og zumo32u4.
+
+For bedre mottak på zumoen kan jumperene for og velge proximity/line sensor fjernes for og frigjøre pinnen, for og så koble en ekstern IR mottaker til den.
+
 ![image](bilder/Schematic_ReciveIRCommand.png)
 
 

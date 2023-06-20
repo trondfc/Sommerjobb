@@ -1,3 +1,126 @@
+# Call and answer
+- [Call and answer](#call-and-answer)
+  - [Arduino Uno](#arduino-uno)
+    - [Kode eksmepel](#kode-eksmepel)
+  - [Zumo](#zumo)
+    - [Kode eksempel](#kode-eksempel)
+
+Eksempelkode for toveis komunikkasjon med IR dioder og mottakere.
+
+Koden benytter seg av `IRemote` biblioteket for lesing og dekoding av IR data, samt sending fra Arduino. For sending av data fra zumo er `Zumo32U4IRPulses` bibliotekteket benytter for generering av bærebølge, mens logikken er skrevet.
+
+Eksempelkoden har deffinert noen ID-er og kommandoer for NEC komunikkasjonen.
+|Enhet| ID|
+|-----|---|
+|Lyskryss| 0x01|
+|Runde tidtaker | 0xC8  
+
+
+|Kommando | Kode |
+|----|---|
+|Rødt lys | 0x34 |
+|Gult lys | 0x35 |
+|Grønnt lys | 0x36 |
+|Identifiser bil | 0xF0|
+|Svar på identifikasjon| 0x02 |
+|Dette er en bomstasjon| 0xF1 |
+|Lokk opp bom | 0x01 |
+
+
+## Arduino Uno
+
+Arduinoen sender periodisk ut en komando med en forespørsel og venter på svar. 
+
+![immage](Schematic.png)
+### Kode eksmepel
+```cpp
+/*
+* Program to send IR commands to a device and receive the answer
+*/
+#define DECODE_NEC  // We want to decode NEC protocol
+
+#define IR_RECEIVE_PIN      2 // To be compatible with interrupt example, pin 2 is chosen here.
+#define IR_SEND_PIN         3
+
+#include <IRremote.hpp>
+
+#define DEVICE_ID 200 // ID of the device, used to identify the sender
+
+#define COMMAND_IDENTIFY 0xF0    // Command for telling the robot to identify itself
+#define COMMAND_TOL_STATION 0xF1 // Command for telling the robot it's at a tol station
+
+#define COMMAND_OPEN 0x01   // Command for telling the tol station to open the gate
+
+#define ANSER_TIMEOUT 5000 // Time between transmissions
+
+bool awaitingAnswer = false;
+unsigned long lastTransmission = 0;
+
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+
+  Serial.begin(9600);
+  delay(3000);
+
+  // Just to know which program is running on my Arduino
+  Serial.println(F("START " __FILE__ " from " __DATE__ "\r\nUsing library version " VERSION_IRREMOTE));
+  Serial.print(F("Send IR signals at pin "));
+  Serial.println(IR_SEND_PIN);
+  Serial.print(F("Ready to receive IR signals of protocols: "));
+  printActiveIRProtocols(&Serial);
+  Serial.print(F("at pin "));
+  Serial.println(IR_RECEIVE_PIN);
+
+  IrReceiver.begin(IR_RECEIVE_PIN);
+  IrSender.begin(DISABLE_LED_FEEDBACK);  
+}
+
+void loop() {
+  unsigned long timeNow = millis();
+  if (timeNow - lastTransmission > ANSER_TIMEOUT) {
+    Serial.println();
+    Serial.print(F("Send now: address=0x"));
+    Serial.print(DEVICE_ID, HEX);
+    Serial.print(F(", command=0x"));
+    Serial.print(COMMAND_IDENTIFY, HEX);
+    Serial.println();
+
+    Serial.println(F("Send standard NEC with 8 bit address"));
+    Serial.flush();
+    IrSender.sendNEC(DEVICE_ID, COMMAND_IDENTIFY, 0);
+    lastTransmission = timeNow;
+    awaitingAnswer = true;
+  }
+    if (IrReceiver.decode()) {
+
+      IrReceiver.printIRResultShort(&Serial);
+
+
+      if (IrReceiver.decodedIRData.protocol == UNKNOWN) {
+        Serial.println(F("Received noise or an unknown (or not yet enabled) protocol"));
+        // We have an unknown protocol here, print more info
+        IrReceiver.printIRResultRawFormatted(&Serial, true);
+      }
+      Serial.println();
+      IrReceiver.resume();  // Enable receiving of the next value
+
+      if (awaitingAnswer && IrReceiver.decodedIRData.address != DEVICE_ID) {
+        Serial.println("Got answer");
+        Serial.print("The car ID is:");
+        Serial.println(IrReceiver.decodedIRData.address);
+
+        Serial.print("Recived command is:");
+        Serial.println(IrReceiver.decodedIRData.command);
+        awaitingAnswer = false;
+      }
+    }
+}
+
+```
+## Zumo
+Zumo bilen vill kontunuerlig søke etter IR kommandoer, mottar den en komando vill den verifisere at senderen er i listen over verifiserte senderenheter og svare på den mottatte komandoen. 
+### Kode eksempel
+```cpp
 /*
 * Porgram for Zumo robot to receive a command from a remote and answer it
 */
@@ -32,6 +155,7 @@ const int authorisedDevices[] = { 200, 201 }; // List of authorised devices
 #define COMMAND_TOL_STATION 0xF1    // Command for telling the robot it's at a tol station
 
 #define COMMAND_OPEN 0x01   // Command for telling the tol station to open the gate
+#define COMMAND_IDENTIFYING 0x02
 
 #define ANSWER_DELAY 30 // Delay before answering a command, needed for the IR receiver to be ready
 
@@ -89,7 +213,7 @@ void handleCommand(uint16_t senderID, uint16_t command) {
   if (isAuthorised(senderID)) {
     if (command == COMMAND_IDENTIFY) {
       DEBUG("Identify");
-      sendCommand(DEVICE_ID, 0x00, IR_DIRECTION);   // Send device ID and no command
+      sendCommand(DEVICE_ID, COMMAND_IDENTIFYING, IR_DIRECTION);   // Send device ID and no command
     } else if (command == COMMAND_TOL_STATION) {
       DEBUG("Tol station");
       sendCommand(DEVICE_ID, COMMAND_OPEN, IR_DIRECTION); //Send open command
@@ -168,3 +292,5 @@ void sendByte(uint8_t byte, Zumo32U4IRPulses::Direction direction) {
 void startPulse(Zumo32U4IRPulses::Direction direction) {
   Zumo32U4IRPulses::start(direction, IR_BRIGHNESS, SUBCARIER_PERIOD);  // Turn on IR LED int the specified direction with subcarrier
 }
+
+```
