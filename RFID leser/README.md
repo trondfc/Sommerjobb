@@ -9,7 +9,7 @@ Lesigen av "tagen" går fort nokk til at det bør holde og kjøre forbi leseren,
 
 Rekevidden på avlesningen er begrenset til ~2cm hvilket gjør det utfordrene og lese av bilen fra siden. Med en 3D printet "hump" men en helning på >10&deg; er bilen i stand til og kjøre over rfid leseren og tagen kan leses fra undersiden.
 
-RFID modulen kommuniserer via SPI hvilket ikke er tilgjengelig på Zumo bilen. Det eksisterer i2c RFID lesere som trolig kan benyttes.
+RFID modulen kommunisererl via SPI hvilket ikke er tilgjengelig på Zumo bilen. Det eksisterer i2c RFID lesere som trolig kan benyttes.
 
 ## Oppgaveideer
 * Registrering av passering for rundetid, bompenger el.
@@ -18,3 +18,4 @@ RFID modulen kommuniserer via SPI hvilket ikke er tilgjengelig på Zumo bilen. D
 - [x] Teste murligheten for avlesning fra undersiden
 - [ ] fysisk test
 - [x] Teste murligheten for skriving av enkel data til tag
+- [ ] lesing fra Zumo (krever i2c leser)
