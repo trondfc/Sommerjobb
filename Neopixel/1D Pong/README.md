@@ -1,5 +1,11 @@
 # 1D pong
 
+En dimensjonalt pong spill på en neopixel LED stripe.
+
+Hver spiller har en knapp for og slå ballen. Trykker spilleren på knappen mens ballen er innenfor sit felt (lysende blått eller grøndt) vill ballen sendes tilbake mot motspilleren. Avhengig av hvor langt inn på spillerens felt ballen er når knappen trykkes vill hastigheten på ballen variere, jo lengere inn, jo raskere slag.
+
+Runden vinnes når motspilleren bommer på ballen. Når en spiller får en påengsum på `SCORE_TO_WIN` (her satt til 5) vill spillerens felt krympe med en pixel og påengsummen settes tilbake til 0. Spillet er over når første spiller krymper feltet sit til det ikke er noe felt igjenn.
+
 ![image](Schematic.png)
 
 [1D Pong.ino](1D%20Pong.ino)
