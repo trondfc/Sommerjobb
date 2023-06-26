@@ -7,16 +7,16 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(NUMPIXELS, LED_PIN, NEO_GRB + NEO_KH
 
 #define BUTTON 2 // Pin for the left button
 
+#define TARGET_PX 3 // Number of target pixels
+
 unsigned long lastTime = 0; // Time of the last frame
 unsigned long lastButtonTime = 0;
 
 int playerPos = 0; // Position of the player
-int targetPos = random(1, NUMPIXELS-1); // Position of the target
+int targetPos = random(0, NUMPIXELS-1); // Position of the target
 int speed = 5; // Speed of the player, px/s
 int score = 0; // Score of the player
 int highscore = 0;
-
-bool easyMode = true; // Whether the game is in easy mode
 
 void setup(){
     Serial.begin(9600);
@@ -33,10 +33,8 @@ void loop(){
         lastTime = millis();
         strip.clear();
         playerPos = (playerPos + 1) % NUMPIXELS; // Increment player's position with wraparound
-        strip.setPixelColor(targetPos, strip.Color(255, 0, 0)); // Set the target pixel to red
-        if(easyMode){   // If the game is in easy mode set the pixels next to the target to red
-            strip.setPixelColor(targetPos + 1, strip.Color(255, 0, 0));
-            strip.setPixelColor(targetPos - 1, strip.Color(255, 0, 0));
+        for (int i = 0; i < TARGET_PX; i++){ // Set the target pixels to red
+            strip.setPixelColor((targetPos + i) % NUMPIXELS, strip.Color(255, 0, 0));
         }
         strip.setPixelColor(playerPos, strip.Color(0, 0, 255)); // Set the player pixel to blue
         strip.show();
@@ -47,11 +45,9 @@ void loop(){
     }
 }
 
-
+// Called when the button is pressed
 void buttonUpdate(){
-        if(playerPos == targetPos){ // If the player is on the target
-            targetHit();
-        } else if (easyMode && (playerPos == targetPos + 1 || playerPos == targetPos - 1)){ // If the player is at the target in easy mode
+        if(playerPos > targetPos && playerPos <= targetPos + TARGET_PX){ // If the player is in the target
             targetHit();
         } else {
             blinkStrip(255, 0, 0, 2, 100); // Blink red
