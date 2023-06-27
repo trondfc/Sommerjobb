@@ -10,7 +10,7 @@
 #include <Arduino.h>
 #include "debug.h"  // include debug class
 
-debug DebugDeathAnimation(DEBUG_DEBUG, "deathAnimation.h"); // create debug object for deathAnimation class
+debug DebugDeathAnimation(DEBUG_LEVEL, "deathAnimation.h"); // create debug object for deathAnimation class
 
 // deathAnimation class
 class deathAnimation

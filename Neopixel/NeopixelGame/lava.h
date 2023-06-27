@@ -9,7 +9,7 @@
 #include <Arduino.h>
 #include "debug.h"  // include debug class
 
-debug DebugLava(DEBUG_INFO, "lava.h");  // create debug object for lava class
+debug DebugLava(DEBUG_LEVEL, "lava.h");  // create debug object for lava class
 
 // lava class
 class lava

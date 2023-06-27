@@ -8,7 +8,7 @@
 #include <Arduino.h>
 #include "debug.h"  // include debug class
 
-debug DebugEnemy(DEBUG_INFO, "enemy.h");    // create debug object for enemy class
+debug DebugEnemy(DEBUG_LEVEL, "enemy.h");    // create debug object for enemy class
 
 // enemy class
 class enemy
@@ -82,8 +82,8 @@ void enemy::update()
     if(millis() - _lastAction > _nextAction){   // check if enemy should do an action
         _lastAction = millis();
         _nextAction = random(ENEMY_ACTION_MIN_TIME, ENEMY_ACTION_MAX_TIME); // set next action time
-        int action = random(0, 2);  // get random action
-        if(action == 0){
+        int action = random(0, 101);  // get random action
+        if(action <= ENEMY_ATTACK_CHANCE){
             attack();
         }else{
             defend();

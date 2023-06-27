@@ -5,7 +5,7 @@
 */
 
 
-#define DEBUG_LEVEL DEBUG_DEBUG // Debug level
+#define DEBUG_LEVEL DEBUG_INFO // Debug level
 
 //////////////////////////////////////////
 // IO
@@ -36,7 +36,7 @@
 // PLAYER
 //////////////////////////////////////////
 #define PLAYER_ATTACK_RANGE DEFAULT_ATACK_RANGE     // Player attack range
-#define PLAYER_CHARGE_TIME DEFAULT_CHARGE_TIME*2    // Player charge time
+#define PLAYER_CHARGE_TIME DEFAULT_CHARGE_TIME*1.5    // Player charge time
 #define PLAYER_ATTACK_TIME DEFAULT_ATTACK_TIME      // Player attack time
 #define PLAYER_DEFEND_TIME DEFAULT_DEFEND_TIME      // Player defend time
 
@@ -53,14 +53,30 @@
 #define ENEMY_CHARGE_TIME DEFAULT_CHARGE_TIME   // Enemy charge time
 #define ENEMY_ATTACK_TIME DEFAULT_ATTACK_TIME   // Enemy attack time
 #define ENEMY_DEFEND_TIME DEFAULT_DEFEND_TIME   // Enemy defend time
-#define ENEMY_ACTION_MIN_TIME 500               // Minimum time between the enemy actions
-#define ENEMY_ACTION_MAX_TIME 2000              // Maximum time between the enemy actions
+#define ENEMY_ACTION_MIN_TIME 750               // Minimum time between the enemy actions
+#define ENEMY_ACTION_MAX_TIME 2500              // Maximum time between the enemy actions
+#define ENEMY_ATTACK_CHANCE 75                  // Chance of the enemy attacking vs defending (0-100)
 
 #define COLOR_ENEMY 0xFF0000            // Enemy color
 #define COLOR_ENEMY_CHARGE 0x4f0000     // Enemy charge color
 #define COLOR_ENEMY_ATTACK 0xff8808     // Enemy attack color
 #define COLOR_ENEMY_DEFEND 0xff4d4d     // Enemy defend color
 #define COLOR_ENEMY_DEATH 0x260000      // Enemy death color
+
+//////////////////////////////////////////
+// ARCHER
+//////////////////////////////////////////
+#define ARCHER_CHARGE_TIME DEFAULT_CHARGE_TIME  // Archer charge time
+#define ARCHER_ACTION_MIN_TIME 5000              // Minimum time between the archer actions
+#define ARCHER_ACTION_MAX_TIME 20000            // Maximum time between the archer actions
+
+#define ARROW_SPEED 10                           // Archer arrow speed px/s
+
+#define COLOR_ARCHER 0x00FF00          // Archer color
+#define COLOR_ARCHER_CHARGE 0x4d4d00   // Archer charge color
+#define COLOR_ARCHER_DEATH 0x002600    // Archer death color
+
+#define COLOR_ARROW 0x00FF00           // Arrow color
 
 //////////////////////////////////////////
 // LAVA
@@ -70,8 +86,8 @@
 #define LAVA_ON_MIN 1000            // Lava on time minimum
 #define LAVA_ON_MAX 5000            // Lava on time maximum
 
-#define COLOR_LAVA_ON 0x9e4a00      // Lava on color
-#define COLOR_LAVA_OFF 0x0f0700     // Lava off color
+#define COLOR_LAVA_ON 0x5c4200    // Lava on color
+#define COLOR_LAVA_OFF 0x241a00     // Lava off color
 
 
 

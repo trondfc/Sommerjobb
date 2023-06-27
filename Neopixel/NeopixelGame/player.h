@@ -156,8 +156,10 @@ bool player::hit()
 {
     _lives--;           // decrement lives
     _pos = 0;           // set player position to 0
+    DebugPlayer.println("Player hit, lives: " + String(_lives), DEBUG_INFO);
     if (_lives <= 0)    // check if player has no lives left
     {
+        DebugPlayer.println("Player dead", DEBUG_INFO);
         _alive = false; // set player alive state to false
         _pos = -10;     // move player off screen
     }
