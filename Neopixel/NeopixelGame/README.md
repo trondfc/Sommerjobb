@@ -16,6 +16,10 @@
     - [Kodefiler](#kodefiler)
   - [To do](#to-do)
 
+1D dungeon crlawler spill på en WS2182b led stripe, inspirert av [Twang](https://github.com/bdring/TWANG/tree/master).
+
+Målet mes spillet er og forflytte spilleren over hele led stripen uten og dø.
+
 ## Video
 
 [![Watch the video](Images/game_60px_1m.jpg)](Images/game_60px_1m.mp4)
@@ -26,6 +30,7 @@ Opprettet til spillet er en enkel krets med fire kanpper for kontroll og en WS21
 
 ## Spill objekter
 Koden for spillet er baset på objekter for de forskjellige elementene.
+Funksjonene til de forskjellige klassene er dokumentert i [classes.md](classes.md)
 ### Spiller (player)
 Spiller karakteren. Styres av kanppetrykk.
 
@@ -42,7 +47,40 @@ Animasjon for død karakter. Startes  med `.start(int pos, uint32?t color)` funk
 
 ## Kode
 ### Spill logikk
-Logikken til spillet er gjort i [NeopixelGame.ino](NeopixelGame.ino)
+Logikken til spillet er gjort i [NeopixelGame.ino](NeopixelGame.ino). Dette inkluderer fremvisning av objektene på LED stripen og kolisjonslogikk.
+```cpp
+[...]
+if(Enemys[x].isColliding(Player1.getPos())){    // check if player is colliding with enemy
+    // start death animation at player position with player death color
+    // and hit player
+    startDeathAnimation(Player1.getPos(), COLOR_PLAYER_DEATH);
+    Player1.hit();
+}
+if(Enemys[x].isHiting(Player1.getPos())){   // check if enemy is hitting player
+    if(!Player1.isDefending()){             // check if player is not defending
+        // start death animation at player position with player death color
+        // and hit player
+        startDeathAnimation(Player1.getPos(), COLOR_PLAYER_DEATH);
+        Player1.hit();
+    }
+}
+if(Player1.isHiting(Enemys[x].getPos())){   // check if player is hitting enemy
+    if(!Enemys[x].isDefending()){           // check if enemy is not defending
+        // start death animation at enemy position with enemy death color
+        // and hit enemy
+        startDeathAnimation(Enemys[x].getPos(), COLOR_ENEMY_DEATH);
+        Enemys[x].hit();
+    }
+
+}
+// draw all pixels of the enemy
+for(int i = 0; i < Enemys[x].getSize(); i++){
+    setPixel(Enemys[x].getPos() - i, Enemys[x].getColor());
+}
+[...]
+```
+
+Rekkefølgen prosseseringen av objektene gjøres i påvirker sluttresultatet. De objektene som fremstilles sist overskriver de tidligre. Av denne grunnen blir prosseseringen av de minst viktige objektene gjort først, og spilleren sist.
 ### Spill oppsett
 Spill oppsettet gjøres i [NeopixelGame.ino](NeopixelGame.ino) ved å sette mengden objekter `#define ENEMY_AMOUNT 5`, og plasere de utover i `void startup()` med `Enemys[0].start(10);`
 ### Spill konfigurasjon
