@@ -59,6 +59,7 @@ enemy Enemys[ENEMY_AMOUNT];
 deathAnimation DeathAnimations[DEATH_ANIMATION_AMOUNT];
 
 // create archer and arrow objects
+// Artchers makes the game a lot harder, be carful to not add to many
 #define ARCHER_AMOUNT 2
 archer Archers[ARCHER_AMOUNT];
 arrow Arrows[ARCHER_AMOUNT];
