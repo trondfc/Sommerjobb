@@ -47,11 +47,11 @@ debug Debug(DEBUG_LEVEL, "NeopixelGame");   // create debug object for main clas
 player Player1(PIN_BUTTON_FORWARD, PIN_BUTTON_BACKWARD, PIN_BUTTON_ATTACK, PIN_BUTTON_DEFEND, 30);
 
 // create lava objects
-#define LAVA_AMOUNT 4
+#define LAVA_AMOUNT 8
 lava Lava[LAVA_AMOUNT];
 
 // create enemy objects
-#define ENEMY_AMOUNT 5
+#define ENEMY_AMOUNT 10
 enemy Enemys[ENEMY_AMOUNT];
 
 // create death animation objects
@@ -60,9 +60,11 @@ deathAnimation DeathAnimations[DEATH_ANIMATION_AMOUNT];
 
 // create archer and arrow objects
 // Artchers makes the game a lot harder, be carful to not add to many
-#define ARCHER_AMOUNT 2
+#define ARCHER_AMOUNT 4
 archer Archers[ARCHER_AMOUNT];
 arrow Arrows[ARCHER_AMOUNT];
+
+int gameLevel = 1;
 
 void setup(){
     Debug.begin(9600);  // start serial debug
@@ -74,39 +76,7 @@ void setup(){
     // initialize player
     Player1.begin();
 
-    /*
-    * Initialize lava
-    *
-    * Lava at position 5 with a size of 3
-    * Lava at position 20 with a size of 2, custom on/off times
-    * Lava at position 35 with a size of 6
-    * Lava at position 47 with a size of 4, custom on/off times
-    */
-    Lava[0].start(5, 3);    
-    Lava[1].start(20, 2, 2000, 5000, 500, 1000);
-    Lava[2].start(35, 6);
-    Lava[3].start(47, 4, 500, 2000, 2000, 5000);
-
-    /*
-    * Initialize enemies
-    *
-    * Enemy at position 10, 14, 25, 43, 45
-    */    
-    Enemys[0].start(10);
-    Enemys[1].start(14);
-    Enemys[2].start(25);
-    Enemys[3].start(43);
-    Enemys[4].start(45);
-
-    /*
-    * Initialize archers
-    *
-    * Archer at position 30, custom atack times
-    * Archer at position 55
-    */
-    Archers[0].start(30, ARCHER_ACTION_MIN_TIME*2, ARCHER_ACTION_MAX_TIME*2);
-    Archers[1].start(55);
-
+    startLevel1();  // start level 1
 }
 
 void loop(){
@@ -218,6 +188,9 @@ void loop(){
     for(int i = 0; i < Player1.getSize(); i++){
         setPixel(Player1.getPos() + i, Player1.getColor());
     }
+    if(Player1.getPos() == NUMPIXELS - 1){    // check if player is at the end of the strip
+        comletedLevel();    // start next level
+    }
     
     FastLED.show(); // show all pixel data
 
@@ -244,4 +217,146 @@ void startDeathAnimation(int pos, uint32_t color){
             return;
         }
     }
+}
+
+void setStrip(uint32_t color){
+    for(int i = 0; i < NUMPIXELS; i++){
+        setPixel(i, color);
+    }
+}
+
+void comletedLevel(){
+    setStrip(0xFFFFFF);
+    FastLED.show();
+    delay(500);
+    setStrip(0x000000);
+    delay(2000);
+    Player1.setPos(0);
+    gameLevel++;
+
+    switch (gameLevel)
+    {
+    case 1:
+        startLevel1();
+        break;
+    case 2:
+        startLevel2();
+        break;
+    case 3:
+        startLevel3();
+        break;
+    case 4:
+        startLevel4();
+        break;
+    default:
+        break;
+    }
+}
+
+void removeAllObjects(){
+    // remove all lava objects
+    for(int i = 0; i < LAVA_AMOUNT; i++){
+        Lava[i].remove();
+    }
+    // remove all enemy objects
+    for(int i = 0; i < ENEMY_AMOUNT; i++){
+        Enemys[i].remove();
+    }
+    // remove all archer objects
+    for(int i = 0; i < ARCHER_AMOUNT; i++){
+        Archers[i].remove();
+    }
+}
+
+void startLevel1(){
+    removeAllObjects();
+    /*
+    * Initialize lava
+    * Lava at position 5 with a size of 3
+    * Lava at position 20 with a size of 2
+    * Lava at position 35 with a size of 6
+    * Lava at position 47 with a size of 4
+    */
+    Lava[0].start(5, 3);    
+    Lava[1].start(20, 2);
+    Lava[2].start(35, 6);
+    Lava[3].start(47, 4);
+}
+
+void startLevel2(){
+    removeAllObjects();
+    /*
+    * Initialize lava
+    * Lava at position 5 with a size of 3
+    * Lava at position 20 with a size of 2
+    * Lava at position 35 with a size of 6
+    * Lava at position 47 with a size of 4
+    */
+    Lava[0].start(5, 3);
+    Lava[1].start(20, 2);
+    Lava[2].start(35, 6);
+    Lava[3].start(47, 4);
+    /*
+    * Initialize enemy
+    * Enemy at position 10
+    * Enemy at position 25
+    */
+    Enemys[0].start(10);
+    Enemys[1].start(25);
+}
+
+void startLevel3(){
+    removeAllObjects();
+    /*
+    * Initialize lava
+    * Lava at position 5 with a size of 3
+    * Lava at position 20 with a size of 2
+    * Lava at position 35 with a size of 6
+    * Lava at position 47 with a size of 4
+    */
+    Lava[0].start(5, 3);
+    Lava[1].start(20, 2, 500, 2500, 500, 2500);
+    Lava[2].start(35, 6);
+    Lava[3].start(47, 4);
+    /*
+    * Initialize enemy
+    * Enemy at position 10
+    * Enemy at position 25
+    */
+    Enemys[0].start(10);
+    Enemys[1].start(25);
+    /*
+    * Initialize archer
+    * Archer at position 40
+    */
+    Archers[0].start(40);
+}
+
+void startLevel4(){
+    removeAllObjects();
+    /*
+    * Initialize lava
+    * Lava at position 5 with a size of 3
+    * Lava at position 20 with a size of 2
+    * Lava at position 35 with a size of 6
+    * Lava at position 47 with a size of 4
+    */
+    Lava[0].start(5, 3);
+    Lava[1].start(20, 2, 500, 2500, 500, 2500);
+    Lava[2].start(35, 6);
+    Lava[3].start(47, 4, 500, 2000, 500, 2000);
+    /*
+    * Initialize enemy
+    * Enemy at position 10
+    * Enemy at position 25
+    */
+    Enemys[0].start(10);
+    Enemys[1].start(25);
+    Enemys[2].start(17);
+    Enemys[3].start(32);
+    /*
+    * Initialize archer
+    * Archer at position 40
+    */
+    Archers[0].start(40);
 }

@@ -16,6 +16,7 @@ class enemy
     public:
         enemy();                    // constructor, unused
         void start(int pos);        // start enemy
+        void remove();              // remove enemy
         void update();              // update enemy
 
         bool isColliding(int pos);  // check if a position is colliding with the enemy object
@@ -72,6 +73,13 @@ void enemy::start(int pos)
     _size = 1;
     _color = COLOR_ENEMY;
     _active = true;
+}
+
+// remove enemy
+void enemy::remove()
+{
+    _active = false;
+    _pos = -10;
 }
 
 // update enemy

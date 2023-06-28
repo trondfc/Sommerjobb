@@ -19,6 +19,7 @@ class archer
         archer();   // constructor, unused
         void start(int pos);    // start the archer at a position with default attack times
         void start(int pos, int minAttackTime, int maxAttackTime);  // start the archer at a position with custom attack times
+        void remove();  // remove the archer
         void update();  // update the archer
 
         bool isColliding(int pos);  // check if the archer is colliding with a position
@@ -65,6 +66,12 @@ void archer::start(int pos)
     _minAttackTime = ARCHER_ACTION_MIN_TIME;
     _maxAttackTime = ARCHER_ACTION_MAX_TIME;
     _nextAction = random(_minAttackTime, _maxAttackTime);
+}
+
+// remove the archer
+void archer::remove(){
+    _active = false;
+    _pos = -10;
 }
 
 // start the archer at a position with custom attack times
